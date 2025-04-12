@@ -7,10 +7,9 @@ function ColorMyPencils(color)
 end
 
 return {
+  { "akinsho/horizon.nvim", version = "*" },
 
-  {
-    "erikbackman/brightburn.vim",
-  },
+  { "erikbackman/brightburn.vim" },
 
   {
     "folke/tokyonight.nvim",
