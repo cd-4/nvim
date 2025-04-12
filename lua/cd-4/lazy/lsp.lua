@@ -19,5 +19,15 @@ return {
     lspconfig.pyright.setup({
       on_attach = on_attach,
     })
+
+    lspconfig.ts_ls.setup({
+      on_attach = on_attach,
+      settings = {
+        -- Add any specific settings here if needed
+        tsserver = {
+          filetypes = { "javascript", "typescript", "javascriptreact", "typescriptreact", "tsx", "jsx" },
+        },
+      },
+    })
   end,
 }
