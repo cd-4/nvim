@@ -19,6 +19,10 @@ return {
           "tsx",
         },
 
+        autotag = {
+          enable = true,
+        },
+
         -- Install parsers synchronously (only applied to `ensure_installed`)
         sync_install = false,
 
