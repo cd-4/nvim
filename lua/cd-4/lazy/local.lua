@@ -1,9 +1,9 @@
 return {
   {
-    "git-workflows.nvim",
-    dir = "~/repos/git-workflows.nvim",
+    "git-needy.nvim",
+    dir = "~/repos/git-needy.nvim",
     config = function()
-      require("git-workflows").setup()
+      require("git-needy").setup()
     end,
   },
 }

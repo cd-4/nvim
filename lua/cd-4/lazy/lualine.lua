@@ -5,7 +5,7 @@ return {
     local config = require("lualine").get_config()
     config.options.theme = "horizon"
 
-    local pending_workflows = require("git-workflows").get_lualine_section()
+    local pending_workflows = require("git-needy").get_lualine_section()
 
     require("lualine").setup({
       --options = { theme = "horizon" },
