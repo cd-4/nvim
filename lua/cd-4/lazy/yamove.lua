@@ -10,7 +10,7 @@ return {
     vim.keymap.set("n", "<C-h>", vim.cmd.YaMoveOut)
     vim.keymap.set("n", "<C-l>", vim.cmd.YaMoveIn)
 
-    vim.keymap.set("n", "<C-m>", vim.cmd.YaMoveOutDown)
+    vim.keymap.set("n", "<C-n>", vim.cmd.YaMoveOutDown)
     vim.keymap.set("n", "<C-p>", vim.cmd.YaMoveInUp)
   end,
 }
