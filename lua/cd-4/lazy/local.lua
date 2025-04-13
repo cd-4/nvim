@@ -13,6 +13,7 @@ return {
     config = function()
       require("git-needy").setup({
         repos = {},
+        vim.keymap.set("n", "<leader>wf", vim.cmd.GitNeedyOpen),
       })
     end,
   },
