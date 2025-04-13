@@ -16,5 +16,6 @@ return {
       })
       vim.keymap.set("n", "<leader>wf", vim.cmd.GitNeedyOpen)
     end,
+    dependencies = { "nvim-lua/plenary.nvim" },
   },
 }
