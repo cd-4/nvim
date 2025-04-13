@@ -9,7 +9,7 @@ vim.opt.softtabstop = 4
 vim.opt.expandtab = true
 
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "markdown", "javascript", "typescript", "javascriptreact", "typescriptreact" },
+  pattern = { "markdown", "text", "javascript", "typescript", "javascriptreact", "typescriptreact" },
   callback = function()
     vim.bo.tabstop = 2
     vim.bo.shiftwidth = 2
@@ -32,3 +32,14 @@ vim.opt.updatetime = 50
 vim.cmd([[
   filetype plugin indent on
 ]])
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "markdown", "text", "gitcommit" },
+  callback = function()
+    local opts = { buffer = true, remap = false }
+    vim.keymap.set("n", "j", "gj", opts)
+    vim.keymap.set("n", "k", "gk", opts)
+    vim.keymap.set("n", "gj", "j", opts)
+    vim.keymap.set("n", "gk", "k", opts)
+  end,
+})
