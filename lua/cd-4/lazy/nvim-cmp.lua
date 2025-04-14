@@ -12,6 +12,26 @@ return {
     local cmp = require("cmp")
     local luasnip = require("luasnip")
 
+    local next_suggestion = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+      else
+        fallback()
+      end
+    end, { "i", "s" })
+
+    local prev_suggestion = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, { "i", "s" })
+
     cmp.setup({
       snippet = {
         expand = function(args)
@@ -22,25 +42,11 @@ return {
         ["<C-Space>"] = cmp.mapping.complete(),
         ["<CR>"] = cmp.mapping.confirm({ select = true }),
         -- Next Suggestion
-        ["<C-j>"] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_next_item()
-          elseif luasnip.expand_or_jumpable() then
-            luasnip.expand_or_jump()
-          else
-            fallback()
-          end
-        end, { "i", "s" }),
+        ["<C-j>"] = next_suggestion,
+        ["<Tab>"] = next_suggestion,
         -- Prev Suggestion
-        ["<C-k>"] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_prev_item()
-          elseif luasnip.jumpable(-1) then
-            luasnip.jump(-1)
-          else
-            fallback()
-          end
-        end, { "i", "s" }),
+        ["<C-k>"] = prev_suggestion,
+        ["<S-Tab>"] = prev_suggestion,
       }),
       sources = cmp.config.sources({
         { name = "nvim_lsp" },
