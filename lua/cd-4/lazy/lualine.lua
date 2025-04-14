@@ -1,6 +1,9 @@
 return {
   "nvim-lualine/lualine.nvim",
-  dependencies = { "nvim-tree/nvim-web-devicons" },
+  dependencies = {
+    "nvim-tree/nvim-web-devicons",
+    "Isrothy/lualine-diagnostic-message", -- Add it to dependencies
+  },
   config = function()
     local config = require("lualine").get_config()
     config.options.theme = "horizon"
@@ -12,9 +15,22 @@ return {
       sections = {
         lualine_a = { "mode" },
         lualine_b = { "branch", "diff" },
-        lualine_c = { "filename" },
-        lualine_x = { "lsp_status", "filetype", pending_workflows },
-        lualine_y = { "progress" },
+        lualine_c = {
+          { "filename" },
+          { "diagnostic-message" },
+        },
+        lualine_x = { "lsp_status", pending_workflows },
+        lualine_y = {
+          {
+            "line_diagnostics",
+            sources = { "nvim_diagnostic" }, -- Uses built-in LSP diagnostics
+            sections = { "error", "warn", "info", "hint" },
+            symbols = { error = " ", warn = " ", info = " ", hint = " " },
+            colored = true,
+            update_in_insert = false,
+            always_visible = false,
+          },
+        },
         lualine_z = { "location" },
       },
     })
