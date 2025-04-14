@@ -83,6 +83,22 @@ autocmd("LspAttach", {
   end,
 })
 
+-- Show lsp diagnostic popup
+vim.o.updatetime = 250 -- Faster CursorHold trigger
+
+vim.api.nvim_create_autocmd("CursorHold", {
+  callback = function()
+    vim.diagnostic.open_float(nil, {
+      focusable = false,
+      close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+      border = "rounded",
+      source = "always",
+      prefix = "",
+      scope = "cursor",
+    })
+  end,
+})
+
 vim.g.netrw_browse_split = 0
 vim.g.netrw_banner = 0
 vim.g.netrw_winsize = 25
