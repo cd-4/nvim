@@ -5,6 +5,7 @@ return {
     "Isrothy/lualine-diagnostic-message", -- Add it to dependencies
   },
   config = function()
+    local prose = require('nvim-prose')
     local config = require("lualine").get_config()
     config.options.theme = "horizon"
 
@@ -19,7 +20,12 @@ return {
           { "filename" },
           { "diagnostic-message" },
         },
-        lualine_x = { "lsp_status", pending_workflows },
+        lualine_x = {
+          { prose.word_count,   cond = prose.is_available },
+          { prose.reading_time, cond = prose.is_available },
+          "lsp_status",
+          pending_workflows,
+        },
         lualine_y = {
           {
             "line_diagnostics",
