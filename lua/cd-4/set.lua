@@ -41,5 +41,10 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.keymap.set("n", "k", "gk", opts)
     vim.keymap.set("n", "gj", "j", opts)
     vim.keymap.set("n", "gk", "k", opts)
+    vim.keymap.set("n", "I", "g^i", opts)
+    vim.keymap.set("n", "A", "g$a", opts)
+    vim.keymap.set("n", "gI", "I", opts)
+    vim.keymap.set("n", "gA", "A", opts)
+    vim.opt.linebreak = true
   end,
 })

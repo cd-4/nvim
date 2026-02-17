@@ -2,7 +2,8 @@ return {
   "neovim/nvim-lspconfig",
   event = { "BufReadPre", "BufNewFile" },
   config = function()
-    local lspconfig = require("lspconfig")
+    local lspconfig = vim.lsp.config
+    local lsp = vim.lsp
 
     -- Basic on_attach and capabilities (optional, improve UX)
     local on_attach = function(client, bufnr)
@@ -16,14 +17,14 @@ return {
       end, opts)
     end
 
-    lspconfig.lua_ls.setup({
+    lsp.config("lua_ls", {
       root_dir = require("lspconfig.util").root_pattern(".git", "lua", "init.lua"),
       on_init = function(client)
         if client.workspace_folders then
           local path = client.workspace_folders[1].name
           if
-            path ~= vim.fn.stdpath("config")
-            and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc"))
+              path ~= vim.fn.stdpath("config")
+              and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc"))
           then
             return
           end
@@ -54,15 +55,15 @@ return {
       },
     })
 
-    lspconfig.bashls.setup({
+    lsp.config("bashls", {
       on_attach = on_attach,
     })
 
-    lspconfig.pyright.setup({
+    lsp.config("pyright", {
       on_attach = on_attach,
     })
 
-    lspconfig.ts_ls.setup({
+    lsp.config("ts_ls", {
       on_attach = on_attach,
       settings = {
         -- Add any specific settings here if needed
@@ -70,6 +71,29 @@ return {
           filetypes = { "javascript", "typescript", "javascriptreact", "typescriptreact", "tsx", "jsx" },
         },
       },
+    })
+
+
+    lsp.config("rust_analyzer", {
+      on_attach = on_attach,
+      capabilities = capabilities,
+      cmd = { 'rust-analyzer' },
+      filetypes = { 'rust' },
+      root_markers = { "Cargo.toml", ".git" },
+      single_file_support = true,
+      settings = {
+        ['rust-analyzer'] = {
+          diagnostics = {
+            enable = false,
+          }
+        }
+      },
+      before_init = function(init_params, config)
+        -- See https://github.com/rust-lang/rust-analyzer/blob/eb5da56d839ae0a9e9f50774fa3eb78eb0964550/docs/dev/lsp-extensions.md?plain=1#L26
+        if config.settings and config.settings['rust-analyzer'] then
+          init_params.initializationOptions = config.settings['rust-analyzer']
+        end
+      end,
     })
   end,
 }
